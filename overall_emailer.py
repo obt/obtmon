@@ -2,6 +2,7 @@ import email.mime.text
 import logging
 import logging.handlers
 import optparse
+import os
 import os.path
 import re
 import shlex
@@ -75,6 +76,9 @@ def main(argv=None):
 
   obt_logger = logging.getLogger('obtmon')
   obt_logger.setLevel(log_levels[options.log_level])
+  logdir = os.path.split(options.logfile)[0]
+  if not os.path.exists(logdir):
+    os.makedirs(logdir)
   obt_handler = logging.handlers.RotatingFileHandler(options.logfile, maxBytes=1000000, backupCount=10)
   obt_logger.addHandler(obt_handler)
   
